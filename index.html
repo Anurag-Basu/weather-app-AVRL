@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="weather-container">
+      <h2 class="title">Anurag's Weather App</h2>
+
+      <div id="data-container">
+        <div class="city-list">
+          <button class="get-weather">Get Weather</button>
+          <table id="city-name">
+            <tr>
+              <th>City</th>
+            </tr>
+
+            <tbody id="city-list-name">
+              <tr>
+                <td class="city">London</td>
+              </tr>
+              <tr>
+                <td class="city">New York</td>
+              </tr>
+              <tr>
+                <td class="city">Los Angeles</td>
+              </tr>
+              <tr>
+                <td class="city">Las Vegas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="details-table">
+          <span class="search-box">
+            <input
+              id="search-bar"
+              value="London"
+              type="text"
+              placeholder="City Name......"
+            />
+            <button class="search-btn">Search</button>
+          </span>
+          <table id="table-data">
+            <thead>
+              <tr>
+                <th>City &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>Description</th>
+                <th>Temprature(C)</th>
+                <th>Pressure(hPa)</th>
+                <th>Data age(hrs)</th>
+                <th>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+              </tr>
+            </thead>
+            <tbody id="get-data"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
