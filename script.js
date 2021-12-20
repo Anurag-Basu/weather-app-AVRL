@@ -5,11 +5,20 @@ const cityEl = document.getElementById("city-list-name");
 const tbodyEl = document.getElementById("get-data");
 const cityName = ["London", "New York", "Los Angeles", "Las Vegas"];
 const getWeatherBtn = document.querySelector(".get-weather");
+const cities = document.querySelectorAll('.city');
 const currentDate = new Date();
-
 
 function getWeather() {
   let inputVal = input.value.trim();
+    let index = -1;
+    cities.forEach((c , i) =>{
+        if(c.innerText.trim().toLowerCase() === inputVal.toLowerCase()){
+            index = i;
+            cities[index].classList.add("green")
+            return;
+        }
+    })
+
   fetch(
     `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${inputVal}`
   )
@@ -31,19 +40,22 @@ function getWeather() {
                 <td> <button class="deleteBtn"> Delete </button> </td>
             </tr>
             `;
-
-        tbodyEl.addEventListener("click", onDeleteRow);
+        console.log(index , "index");
+        tbodyEl.addEventListener("click", (e) => onDeleteRow(e, index));
       }
     });
+    input.value ='';
 }
 
-function onDeleteRow(e) {
+function onDeleteRow(e , index) {
   if (!e.target.classList.contains("deleteBtn")) {
     return;
   }
-
+  console.log ("index" , index)
   const btn = e.target;
+  cities[index].classList.remove("green")
   btn.closest("tr").remove();
+
 }
 
 function cityWeather(e) {
@@ -51,7 +63,6 @@ function cityWeather(e) {
     return;
   }
   const cityList = e.target.innerText;
-
   fetch(
     `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${cityList}`
   )
@@ -76,18 +87,31 @@ function cityWeather(e) {
 }
 
 function fetchAllCities() {
-  cityName.forEach((element) => {
+    let index = -1;
+    cities.forEach((c, i) => {
+        if(c.innerText.toLowerCase() === cityName[i].toLowerCase()){
+            index = i;
+            console.log(cities[index])
+            cities[index].classList.add("green");
+            return;
+        }
+    });
+
+    tbodyEl.innerHTML ='';
+  cityName.forEach((city) => {
     fetch(
-      `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${element}`
+      `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${city}`
     )
       .then((res) => res.json())
       .then((data) => {
           const weatherDate = currentDate - new Date(data.date_and_time);
           const weatherHours = Math.floor(weatherDate / 3600) %24;
 
+            
+
         tbodyEl.innerHTML += `
                 <tr>
-                    <td>${element}</td>
+                    <td>${city}</td>
                     <td>${data.description}</td>
                     <td>${data.temp_in_celsius}</td>
                     <td>${data.pressure_in_hPa}</td>
@@ -95,7 +119,7 @@ function fetchAllCities() {
                     <td> <button class="deleteBtn"> Delete </button> </td>
                 </tr>
                 `;
-        tbodyEl.addEventListener("click", onDeleteRow);
+        tbodyEl.addEventListener("click",(e) => onDeleteRow(e, index));
       });
   });
 }
