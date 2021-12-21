@@ -9,19 +9,19 @@ const cities = document.querySelectorAll('.city');
 const currentDate = new Date();
 
 function getWeather() {
+  
   let inputVal = input.value.trim();
+  
     let index = -1;
     cities.forEach((c , i) =>{
         if(c.innerText.trim().toLowerCase() === inputVal.toLowerCase()){
             index = i;
-            cities[index].classList.add("green")
+            cities[index].classList.add("green");
             return;
         }
     })
 
-  fetch(
-    `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${inputVal}`
-  )
+  fetch(    `https://python3-dot-parul-arena-2.appspot.com/test?cityname=${inputVal}`  )
     .then((res) => res.json())
     .then((data) => {
       if (data.status === "failed") {
@@ -40,21 +40,39 @@ function getWeather() {
                 <td> <button class="deleteBtn"> Delete </button> </td>
             </tr>
             `;
-        console.log(index , "index");
-        tbodyEl.addEventListener("click", (e) => onDeleteRow(e, index));
+
+
+
+        tbodyEl.addEventListener("click", (e) => onDeleteRow(e, inputVal));
       }
     });
     input.value ='';
 }
 
-function onDeleteRow(e , index) {
+var index = -1;
+
+function onDeleteRow(e , value) {
   if (!e.target.classList.contains("deleteBtn")) {
     return;
   }
-  console.log ("index" , index)
+
+  
   const btn = e.target;
-  cities[index].classList.remove("green")
+  console.log(e.target.closest('tr'))
   btn.closest("tr").remove();
+
+  cities.forEach((c , i) =>{
+      if(c.innerText.trim().toLowerCase() === value.toLowerCase()){
+          index = i;
+          return;
+        }
+        return;
+      })
+        cities[index].classList.remove("green");
+        console.log(index , "index");        
+        return;
+
+
 
 }
 
